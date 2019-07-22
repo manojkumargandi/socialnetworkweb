@@ -1,4 +1,4 @@
-</<template>
+<template>
 <div>
      <v-toolbar
       color="cyan"
@@ -34,12 +34,9 @@
         </v-card>
       </v-tab-item>
     </v-tabs-items>
-  </div>
 
-    <img
-          src="../assets/sn.jpg"
-          aspect-ratio="2.75"
-        ></img>
+    <div v-if="false">
+      <img src="../assets/sn.jpg" aspect-ratio="2.75"/>
 
           <v-text-field
             v-model="email"
@@ -58,7 +55,43 @@
             @click:append="show1 = !show1"
           ></v-text-field>
      
-      <v-btn color="success">Login</v-btn>
+      <v-btn color="success">Log In</v-btn>
+    </div>
+    <div v-else>
+          <v-text-field
+            v-model="firstname"
+            label="First name"
+            counter
+          ></v-text-field>
+          <v-text-field
+            v-model="lastname"
+            label="Last name"
+            counter
+          ></v-text-field>
+          <v-text-field
+            v-model="dob"
+            label="Date of birst"
+            type="date"
+          ></v-text-field>
+          <v-text-field
+            v-model="email"
+            :rules="[rules.required, rules.email]"
+            label="E-mail"
+            counter
+          ></v-text-field>
+     
+          <v-text-field
+            v-model="password"
+            :append-icon="show1 ? 'visibility' : 'visibility_off'"
+            :rules="[rules.required, rules.min]"
+            :type="show1 ? 'text' : 'password'"
+            label="password"
+            counter
+            @click:append="show1 = !show1"
+          ></v-text-field>
+     
+      <v-btn color="success">Sign Up</v-btn>
+    </div>
   
     </div>    
 </template>
