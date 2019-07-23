@@ -1,5 +1,6 @@
 <template>
-<div
+<v-container>
+  <div
     style="position: relative;"
   >
   <v-app>
@@ -33,4 +34,5 @@
   ></v-toolbar>
   </v-app>
       </div>
+</v-container>
 </template>
