@@ -25,7 +25,7 @@
               counter
               @click:append="show1 = !show1"
             ></v-text-field>
-            <v-btn color="success">Log In</v-btn>
+            <v-btn color="success">Sign In</v-btn>
           </div>
         </v-tab-item>
         <v-tab-item key="signup">
