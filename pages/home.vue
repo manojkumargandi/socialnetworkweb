@@ -1,51 +1,20 @@
 <template>
   <div class="homediv">
     <div class="postdiv">
-      <v-textarea solo name="input-7-4" label="Whats on your mind??"></v-textarea>
-      <v-btn class="postbtn">POST</v-btn>
+      <v-textarea solo name="input-7-4" label="Whats on your mind??" v-model="postText"></v-textarea>
+      <v-btn class="postbtn" @click="post">POST</v-btn>
     </div>
 
     <v-timeline>
-      <v-timeline-item small fill-dot>
+      <v-timeline-item v-for="post in posts" :key="post" small fill-dot>
         <v-card max-width="344" class="mx-auto">
           <v-card-title>
             <v-avatar color="indigo" size="25">
               <!-- <span class="white--text headline">36</span> -->
             </v-avatar>
-            <span class="username">Username</span>
+            <span class="username">{{post.username}}</span>
           </v-card-title>
-          <v-card-text>I'm card text</v-card-text>
-          <v-card-actions>
-            <v-btn text>Click</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-timeline-item>
-      <v-timeline-item small fill-dot>
-        <v-card max-width="344" class="mx-auto">
-          <v-card-title>
-            <v-avatar color="indigo" size="25">
-              <!-- <span class="white--text headline">36</span> -->
-            </v-avatar>
-            <span class="username">Username</span>
-          </v-card-title>
-          <v-card-text>I'm card text</v-card-text>
-          <v-card-actions>
-            <v-btn text>Click</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-timeline-item>
-      <v-timeline-item small fill-dot>
-        <v-card max-width="344" class="mx-auto">
-          <v-card-title>
-            <v-avatar color="indigo" size="25">
-              <!-- <span class="white--text headline">36</span> -->
-            </v-avatar>
-            <span class="username">Username</span>
-          </v-card-title>
-          <v-card-text>I'm card text</v-card-text>
-          <v-card-actions>
-            <v-btn text>Click</v-btn>
-          </v-card-actions>
+          <v-card-text>{{post.content}}</v-card-text>
         </v-card>
       </v-timeline-item>
     </v-timeline>
@@ -53,7 +22,35 @@
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      posts: [
+        {
+          username: "username",
+          content: "this is the card text"
+        },
+        {
+          username: "username",
+          content: "this is the card text"
+        },
+        {
+          username: "username",
+          content: "this is the card text"
+        }
+      ],
+      postText: "",
+    }
+  },
+  methods: {
+    post() {
+      var data = {};
+      data.username = "username"
+      data.content = this.postText
+      this.posts.unshift(data)
+    }
+  }
+};
 </script>
 
 <style>
