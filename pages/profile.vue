@@ -1,25 +1,83 @@
 <template>
-<div>
-    <v-flex xs12 sm6 offset-sm3>
-      <v-card class="cardprofile">
-          <v-img src="https://picsum.photos/510/300?random" aspect-ratio="1.7"></v-img>
-      </v-card>
-    </v-flex>
-</div>
+  <div>
+    <v-card class="cardprofile">
+      <img src="../assets/user.png" aspect-ratio="1.7" />
+      <div class="bio">
+        <span>Username</span>
+        <br />
+        <span>Bio</span>
+      </div>
+    </v-card>
+
+    <v-card class="cardauth">
+      <v-tabs v-model="tab" color="cyan" grow>
+        <v-tabs-slider color="yellow"></v-tabs-slider>
+
+        <v-tab v-for="item in items" :key="item">{{ item }}</v-tab>
+
+        <v-tab-item key="my posts">
+          <v-timeline>
+            <v-timeline-item v-for="post in posts" :key="post" small fill-dot>
+              <v-card max-width="344" class="mx-auto">
+                <v-card-title>
+                  <v-avatar color="indigo" size="25">
+                    <!-- <span class="white--text headline">36</span> -->
+                  </v-avatar>
+                  <span class="username">{{post.username}}</span>
+                </v-card-title>
+                <v-card-text>{{post.content}}</v-card-text>
+              </v-card>
+            </v-timeline-item>
+          </v-timeline>
+        </v-tab-item>
+        <v-tab-item key="my connections">kumar</v-tab-item>
+        <v-tab-item key="child connections">gandi</v-tab-item>
+      </v-tabs>
+    </v-card>
+  </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: ["my posts", "my connections", "child connections"],
+      posts: [
+        {
+          username: "username",
+          content: "this is the card text"
+        },
+        {
+          username: "username",
+          content: "this is the card text"
+        },
+        {
+          username: "username",
+          content: "this is the card text"
+        }
+      ],
+    };
+  }
+};
+</script>
+
 
 
 <style>
 .cardprofile {
-      width: 1050px;
-    height: 500px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    margin: auto;
-    padding: 10px;
+  margin: 20px 200px;
+  padding: 18px;
+}
+
+.bio {
+  float: right;
+  width: 75%;
+}
+
+.lists {
+  display: flex;
+  height: 50px;
+  padding: 10px;
+  margin: 20px 200px;
 }
 </style>
->
