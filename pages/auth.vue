@@ -50,7 +50,7 @@
               @click:append="show1 = !show1"
             ></v-text-field>
 
-            <v-btn color="success">Sign Up</v-btn>
+            <v-btn color="success" @click="signup()">Sign Up</v-btn>
           </div>
         </v-tab-item>
       </v-tabs>
@@ -58,12 +58,18 @@
   </div>
 </template>
 <script>
+
+import axios from 'axios'
 export default {
   data() {
     return {
       email: "",
       show1: false,
       password: "",
+      firstname: "",
+      lastname: "",
+      dob: "",
+      tab: "",
       items: ["signin", "signup"],
       rules: {
         required: value => !!value || "Required.",
@@ -76,6 +82,30 @@ export default {
         emailMatch: () => "The email and password you entered don't match"
       }
     };
+  },
+  methods: {
+    signup() {
+      var details = {};
+      details.email = this.email
+      details.password = this.password
+      details.firstname = this.firstname
+      details.lastname = this.lastname
+      details.dob = this.dob
+
+      var data = details;
+      delete data.password;
+      axios
+        .post("http://localhost:3001/api/signup", details)
+        .then(function(response) {
+          console.log(response.data[0].u.properties);
+          data =  response.data[0].u.properties;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      this.$store.commit('SET_USER', data);
+      this.$router.push('/home');
+    }
   }
 };
 </script>

@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   data() {
     return {
@@ -39,16 +40,44 @@ export default {
           content: "this is the card text"
         }
       ],
-      postText: "",
-    }
+      postText: ""
+    };
   },
   methods: {
     post() {
       var data = {};
-      data.username = "username"
-      data.content = this.postText
-      this.posts.unshift(data)
+      data.content = this.postText;
+      var user = this.$store.getters.loggedUser;
+      var email = user.email;
+      data.username = user.firstname;
+      this.posts.unshift(data);
+      var details = {};
+      details.content = this.postText;
+      details.date = new Date();
+      details.email = email;
+      axios
+        .post("http://localhost:3001/api/createStatus", details)
+        .then(function(response) {
+          console.log(response);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
+  },
+  created() {
+    var user = this.$store.getters.loggedUser;
+    var email = user.email;
+    console.log(email);
+    axios
+      .get("http://localhost:3001/api/getposts", {params:{email: email}})
+      .then(function(response) {
+        console.log(response);
+        // this.posts = response
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 };
 </script>

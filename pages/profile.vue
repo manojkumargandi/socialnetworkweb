@@ -30,8 +30,44 @@
             </v-timeline-item>
           </v-timeline>
         </v-tab-item>
-        <v-tab-item key="my connections">kumar</v-tab-item>
-        <v-tab-item key="child connections">gandi</v-tab-item>
+        <v-tab-item key="my connections">
+          <v-card class="childrequestCard">
+            <div class="friendRequest">
+              <v-avatar
+                class="profile"
+                :size="$vuetify.breakpoint.smAndUp ? 164 : 128"
+                color="grey"
+                tile
+              >
+                <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+              </v-avatar>
+              <div>usernmae</div>
+              <div>
+                <v-btn>decline</v-btn>
+                <v-btn>accept</v-btn>
+              </div>
+            </div>
+          </v-card>
+        </v-tab-item>
+        <v-tab-item key="child connections">
+          <v-card class="childrequestCard">
+            <div class="friendRequest">
+              <v-avatar
+                class="profile"
+                :size="$vuetify.breakpoint.smAndUp ? 164 : 128"
+                color="grey"
+                tile
+              >
+                <v-img src="https://cdn.vuetifyjs.com/images/profiles/marcus.jpg"></v-img>
+              </v-avatar>
+              <div>usernmae</div>
+              <div>
+                <v-btn>decline</v-btn>
+                <v-btn>accept</v-btn>
+              </div>
+            </div>
+          </v-card>
+        </v-tab-item>
       </v-tabs>
     </v-card>
   </div>
@@ -55,7 +91,7 @@ export default {
           username: "username",
           content: "this is the card text"
         }
-      ],
+      ]
     };
   }
 };
@@ -67,6 +103,18 @@ export default {
 .cardprofile {
   margin: 20px 200px;
   padding: 18px;
+}
+
+.friendRequest {
+  text-align: center;
+}
+
+.childrequestCard {
+  width: 301px;
+  background: wheat !important;
+  border-radius: 30px;
+  margin: 40px;
+  padding: 20px;
 }
 
 .bio {
