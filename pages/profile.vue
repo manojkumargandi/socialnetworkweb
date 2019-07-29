@@ -3,9 +3,9 @@
     <v-card class="cardprofile">
       <img src="../assets/user.png" aspect-ratio="1.7" />
       <div class="bio">
-        <span>Username</span>
+        <span class="username">{{user.username}}</span>
         <br />
-        <span>Bio</span>
+        <span>{{user.bio}}</span>
       </div>
     </v-card>
 
@@ -23,7 +23,7 @@
                   <v-avatar color="indigo" size="25">
                     <!-- <span class="white--text headline">36</span> -->
                   </v-avatar>
-                  <span class="username">{{post.username}}</span>
+                  <span class="">{{post.username}}</span>
                 </v-card-title>
                 <v-card-text>{{post.content}}</v-card-text>
               </v-card>
@@ -91,8 +91,12 @@ export default {
           username: "username",
           content: "this is the card text"
         }
-      ]
+      ],
+      user: {}
     };
+  },
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem('user'))
   }
 };
 </script>
@@ -120,6 +124,11 @@ export default {
 .bio {
   float: right;
   width: 75%;
+}
+
+.username {
+  font-size: 25px;
+  text-transform: capitalize;
 }
 
 .lists {

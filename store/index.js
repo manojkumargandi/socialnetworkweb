@@ -7,8 +7,11 @@ export const state = () => {
   
   export const mutations = {
     SET_USER (state, user) {
-      console.log(user);
+      console.log("store", user);
       state.user = user || null
+      if(process.browser){
+      localStorage.setItem("user", JSON.stringify(user))
+    }
     }
   }
   

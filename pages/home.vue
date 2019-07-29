@@ -26,29 +26,16 @@ import axios from "axios";
 export default {
   data() {
     return {
-      posts: [
-        {
-          username: "username",
-          content: "this is the card text"
-        },
-        {
-          username: "username",
-          content: "this is the card text"
-        },
-        {
-          username: "username",
-          content: "this is the card text"
-        }
-      ],
-      postText: ""
+      posts: [],
+      postText: "",
+      user: {}
     };
   },
   methods: {
     post() {
       var data = {};
       data.content = this.postText;
-      var user = this.$store.getters.loggedUser;
-      var email = user.email;
+      var email = this.user.email;
       data.username = user.firstname;
       this.posts.unshift(data);
       var details = {};
@@ -65,17 +52,25 @@ export default {
         });
     }
   },
-  created() {
-    var user = this.$store.getters.loggedUser;
-    var email = user.email;
-    console.log(email);
+  mounted() {
+    this.user = JSON.parse(localStorage.getItem('user'));
+    console.log(this.user);
+    var email = this.user.email;
     axios
       .get("http://localhost:3001/api/getposts", {params:{email: email}})
-      .then(function(response) {
+      .then((response) => {
         console.log(response);
-        // this.posts = response
+        response.data.forEach(item => {
+          var data = {}
+          data.date = item.p.properties.date
+          data.content = item.p.properties.content
+          data.username = item.u.properties.username
+          this.posts.push(data)
+        });
+        
+        console.log(this.posts);
       })
-      .catch(function(error) {
+      .catch((error) => {
         console.log(error);
       });
   }

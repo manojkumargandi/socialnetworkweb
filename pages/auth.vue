@@ -25,7 +25,7 @@
               counter
               @click:append="show1 = !show1"
             ></v-text-field>
-            <v-btn color="success">Sign In</v-btn>
+            <v-btn color="success" @click="signin()">Sign In</v-btn>
           </div>
         </v-tab-item>
         <v-tab-item key="signup">
@@ -93,18 +93,35 @@ export default {
       details.dob = this.dob
 
       var data = details;
-      delete data.password;
       axios
         .post("http://localhost:3001/api/signup", details)
-        .then(function(response) {
+        .then((response) => {
           console.log(response.data[0].u.properties);
           data =  response.data[0].u.properties;
+          this.$store.commit('SET_USER', data);
+          this.$router.push('/home');
         })
-        .catch(function(error) {
+        .catch((error) => {
           console.log(error);
         });
-      this.$store.commit('SET_USER', data);
-      this.$router.push('/home');
+    },
+
+    signin() {
+      var details = {};
+      details.email = this.email
+      details.password = this.password
+      console.log(details)
+      axios
+        .post("http://localhost:3001/api/signin", details)
+        .then((response) => {
+          console.log(response.data[0]);
+          var data =  response.data[0];
+          this.$store.commit('SET_USER', data);
+          this.$router.push('/home');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 };
