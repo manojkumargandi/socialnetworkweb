@@ -36,7 +36,8 @@ export default {
       var data = {};
       data.content = this.postText;
       var email = this.user.email;
-      data.username = user.firstname;
+      console.log(this.user);
+      data.username = this.user.username;
       this.posts.unshift(data);
       var details = {};
       details.content = this.postText;
@@ -62,9 +63,9 @@ export default {
         console.log(response);
         response.data.forEach(item => {
           var data = {}
-          data.date = item.p.properties.date
-          data.content = item.p.properties.content
-          data.username = item.u.properties.username
+          data.date = item.p1.properties.date
+          data.content = item.p1.properties.content
+          data.username = item.b.properties.username
           this.posts.push(data)
         });
         

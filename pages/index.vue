@@ -2,12 +2,12 @@
 <div class="image">
       
   <v-app >
-      <v-toolbar>
+      <!-- <v-toolbar>
       <v-toolbar-title v-text="title" />
       <v-spacer />
     <v-btn color="success">Login</v-btn>
     <v-btn color="success">Signup</v-btn>
-    </v-toolbar>
+    </v-toolbar> -->
     
   </v-app>
 </div>  
@@ -18,6 +18,14 @@ export default {
   data() {
     return {
       title: 'Social Networking'
+    }
+  },
+  mounted() {
+    var user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+      this.$router.push('/timeline')
+    } else {
+      this.$router.push('/auth')
     }
   }
 }

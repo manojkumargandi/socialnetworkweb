@@ -32,7 +32,7 @@
           <div>
             <v-text-field v-model="firstname" label="First name" counter></v-text-field>
             <v-text-field v-model="lastname" label="Last name" counter></v-text-field>
-            <v-text-field v-model="dob" label="Date of birst" type="date"></v-text-field>
+            <v-text-field v-model="dob" label="Date of birst" type="date" @mouseup="getAge()"></v-text-field>
             <v-text-field
               v-model="email"
               :rules="[rules.required, rules.email]"
@@ -50,7 +50,7 @@
               @click:append="show1 = !show1"
             ></v-text-field>
 
-            <v-btn color="success" @click="signup()">Sign Up</v-btn>
+            <v-btn :disabled="enablesignup" color="success" @click="signup()">Sign Up</v-btn>
           </div>
         </v-tab-item>
       </v-tabs>
@@ -66,6 +66,7 @@ export default {
       email: "",
       show1: false,
       password: "",
+      enablesignup: false,
       firstname: "",
       lastname: "",
       dob: "",
@@ -99,7 +100,7 @@ export default {
           console.log(response.data[0].u.properties);
           data =  response.data[0].u.properties;
           this.$store.commit('SET_USER', data);
-          this.$router.push('/home');
+          this.$router.push('/timeline');
         })
         .catch((error) => {
           console.log(error);
@@ -117,11 +118,30 @@ export default {
           console.log(response.data[0]);
           var data =  response.data[0];
           this.$store.commit('SET_USER', data);
-          this.$router.push('/home');
+          this.$router.push('/timeline');
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    enableAge() {
+      if (this.age < 19) {
+        this.enablesignup = true;
+      } else {
+        this.enablesignup = false;
+      }
+    },
+    getAge() {
+      var today = new Date();
+      var birthDate = new Date(this.dob);
+      var age = today.getFullYear() - birthDate.getFullYear();
+      var m = today.getMonth() - birthDate.getMonth();
+      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+        age = age - 1;
+      }
+
+      this.age = age;
+      this.enableAge();
     }
   }
 };

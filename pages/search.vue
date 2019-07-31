@@ -10,7 +10,7 @@
             </v-avatar>
             <div class="username">{{user.username}}</div>
             <div>
-              <v-btn>Connect</v-btn>
+              <v-btn @click="connect(user.email)">{{text}}</v-btn>
             </div>
           </div>
         </v-card>
@@ -26,7 +26,8 @@ export default {
     return {
       users: [],
       allUsers: [],
-      search: ""
+      search: "",
+      text: "Connect"
     };
   },
   methods:{
@@ -42,7 +43,27 @@ export default {
         this.users = heros
       } else {
         this.users = this.allUsers
+  this.text = "Connect"
+
       }
+    },
+    connect(rid) {
+
+      var user = JSON.parse(localStorage.getItem("user"))
+  this.text = "Sent"
+      var details = {}
+      details.rid = rid
+      details.sid = user.email
+
+      axios
+        .post("http://localhost:3001/api/sendconnection", details)
+        .then((response) => {
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
     }
   },
   mounted() {

@@ -16,17 +16,22 @@
         counter
         @click:append="show1 = !show1"
       ></v-text-field>
+      <v-btn @click="createChild()">CREATE</v-btn>
     </v-card>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
       email: "",
       show1: false,
       password: "",
+      firstname: "",
+      lastname: "",
+      dob: "",
       rules: {
         required: value => !!value || "Required.",
         counter: value => value.length <= 20 || "Max 20 characters",
@@ -38,6 +43,36 @@ export default {
         emailMatch: () => "The email and password you entered don't match"
       }
     };
+  },
+  methods: {
+    createChild() {
+      var details = {};
+      details.email = this.email
+      details.password = this.password
+      details.firstname = this.firstname
+      details.lastname = this.lastname
+      details.dob = this.dob
+
+      var user = JSON.parse(localStorage.getItem("user"));
+      details.pemail = user.email
+
+      var data = details;
+      axios
+        .post("http://localhost:3001/api/createchild", details)
+        .then((response) => {
+          console.log(response.data[0].u.properties);
+          data =  response.data[0].u.properties;
+          this.email= ""
+          this.password= ""
+          this.firstname= ""
+          this.lastname= ""
+          this.dob= ""
+          alert("Child created")
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 };
 </script>
@@ -54,8 +89,8 @@ export default {
 }
 
 .childTitle {
-    text-transform: uppercase;
-    text-align: center;
-    font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+  font-size: 18px;
 }
 </style>
